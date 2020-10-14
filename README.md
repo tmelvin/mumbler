@@ -1,4 +1,9 @@
-# barnard
+# barnard - acien101 fork
+
+IS THE SAME BUT IT SUPPORT TO CONNECT TO A CHANNEL AT START LIKE THIS:
+```
+barnard -server mumble.FFF.org:64738 -username prueba -channel "YEAH"
+```
 
 barnard is a terminal-based client for the [Mumble](https://mumble.info) voice
 chat software.
