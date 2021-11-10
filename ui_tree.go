@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/acien101/barnard/uiterm"
-	"layeh.com/gumble/gumble"
+	"github.com/cantudo/barnard/gumble/gumble"
+	"github.com/cantudo/barnard/uiterm"
 )
 
 type TreeItem struct {

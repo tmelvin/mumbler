@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/acien101/barnard/uiterm"
-	"github.com/cantudo/gumble/gumble"
+	"github.com/cantudo/barnard/gumble/gumble"
+	"github.com/cantudo/barnard/uiterm"
 	"github.com/kennygrant/sanitize"
 )
 
