@@ -25,7 +25,7 @@ func (b *Barnard) start() {
 	if os.Getenv("ALSOFT_LOGLEVEL") == "" {
 		os.Setenv("ALSOFT_LOGLEVEL", "0")
 	}
-	if stream, err := gumbleopenal.New(b.Client); err != nil {
+	if stream, err := gumbleopenal.New(b.Client, b.InputDevice, b.OutputDevice); err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)
 	} else {

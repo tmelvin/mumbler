@@ -25,15 +25,15 @@ type Stream struct {
 	contextSink *openal.Context
 }
 
-func New(client *gumble.Client) (*Stream, error) {
+func New(client *gumble.Client, inputDevice string, outputdevice string) (*Stream, error) {
 	s := &Stream{
 		client:          client,
 		sourceFrameSize: client.Config.AudioFrameSize(),
 	}
 
-	s.deviceSource = openal.CaptureOpenDevice("", gumble.AudioSampleRate, openal.FormatMono16, uint32(s.sourceFrameSize))
+	s.deviceSource = openal.CaptureOpenDevice(inputDevice, gumble.AudioSampleRate, openal.FormatMono16, uint32(s.sourceFrameSize))
 
-	s.deviceSink = openal.OpenDevice("")
+	s.deviceSink = openal.OpenDevice(outputDevice)
 	s.contextSink = s.deviceSink.CreateContext()
 	s.contextSink.Activate()
 

@@ -6,10 +6,33 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/bmmcginty/go-openal/openal"
 	"github.com/cantudo/barnard/gumble/gumble"
-	"github.com/cantudo/barnard/uiterm"
 	_ "github.com/cantudo/barnard/gumble/opus"
+	"github.com/cantudo/barnard/uiterm"
 )
+
+func show_devs(name string, args []string) {
+	if args == nil {
+		fmt.Printf("no items for %s\n", name)
+	}
+	fmt.Printf("%s\n", name)
+	for i := 0; i < len(args); i++ {
+		fmt.Printf("%d: %s\n", i, args[i])
+	}
+}
+
+func do_list_devices() {
+	idevs := openal.GetStrings(openal.CaptureDeviceSpecifier)
+	show_devs("Inputs:", idevs)
+	odevs := openal.GetStrings(openal.AllDevicesSpecifier)
+	if odevs != nil && len(odevs) > 0 {
+		show_devs("All outputs:", odevs)
+	} else {
+		odevs = openal.GetStrings(openal.DeviceSpecifier)
+		show_devs("All outputs:", odevs)
+	}
+}
 
 func main() {
 	// Command line flags
@@ -19,14 +42,27 @@ func main() {
 	insecure := flag.Bool("insecure", false, "skip server certificate verification")
 	certificate := flag.String("certificate", "", "PEM encoded certificate and private key")
 	channel := flag.String("channel", "", "channel you would connect")
+	inputdevice := flag.Int("inputdevice", 0, "input device to use, see list_devices")
+	outputdevice := flag.Int("outputdevice", 0, "output device to use, see list_devices")
+	list_devices := flag.Bool("list_devices", false, "do not connect; instead, list available audio devices and exit")
 
 	flag.Parse()
 
+	if *list_devices {
+		do_list_devices()
+		os.Exit(0)
+	}
+
+	idevs := openal.GetStrings(openal.CaptureDeviceSpecifier)
+	odevs := openal.GetStrings(openal.AllDevicesSpecifier)
+
 	// Initialize
 	b := Barnard{
-		Config:  gumble.NewConfig(),
-		Address: *server,
-		Channel: *channel,
+		Config:       gumble.NewConfig(),
+		Address:      *server,
+		Channel:      *channel,
+		InputDevice:  idevs[*inputdevice],
+		OutputDevice: odevs[*outputdevice],
 	}
 
 	b.Config.Username = *username

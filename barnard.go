@@ -3,9 +3,9 @@ package main
 import (
 	"crypto/tls"
 
-	"github.com/acien101/barnard/uiterm"
-	"github.com/cantudo/gumble/gumble"
-	"github.com/cantudo/gumble/gumbleopenal"
+	"github.com/cantudo/barnard/gumble/gumble"
+	"github.com/cantudo/barnard/gumble/gumbleopenal"
+	"github.com/cantudo/barnard/uiterm"
 )
 
 type Barnard struct {
@@ -15,6 +15,9 @@ type Barnard struct {
 	Address   string
 	Channel   string
 	TLSConfig tls.Config
+
+	InputDevice  string
+	OutputDevice string
 
 	Stream *gumbleopenal.Stream
 
