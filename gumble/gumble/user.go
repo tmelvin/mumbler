@@ -1,8 +1,8 @@
 package gumble
 
 import (
+	"github.com/cantudo/barnard/gumble/gumble/MumbleProto"
 	"github.com/golang/protobuf/proto"
-	"layeh.com/gumble/gumble/MumbleProto"
 )
 
 // User represents a user that is currently connected to the server.

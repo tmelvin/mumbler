@@ -21,8 +21,8 @@ gumble is a [Mumble](https://mumble.info/) client implementation in Go
 package main
 
 import (
-  "layeh.com/gumble/gumble"
-  "layeh.com/gumble/gumbleutil"
+  "github.com/cantudo/barnard/gumble/gumble"
+  "github.com/cantudo/barnard/gumble/gumbleutil"
 )
 
 func main() {

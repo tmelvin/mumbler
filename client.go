@@ -5,9 +5,9 @@ import (
 	"net"
 	"os"
 
-	"layeh.com/gumble/gumble"
-	"layeh.com/gumble/gumbleopenal"
-	"layeh.com/gumble/gumbleutil"
+	"github.com/cantudo/barnard/gumble/gumble"
+	"github.com/cantudo/barnard/gumble/gumbleopenal"
+	"github.com/cantudo/barnard/gumble/gumbleutil"
 )
 
 func (b *Barnard) start() {
@@ -41,9 +41,9 @@ func (b *Barnard) OnConnect(e *gumble.ConnectEvent) {
 		target := e.Client.Self.Channel.Find(b.Channel)
 		if target != nil {
 			e.Client.Self.Move(e.Client.Self.Channel.Find(b.Channel))
-		} else{
-			b.AddOutputLine(fmt.Sprintf("Could not connect to %s, moving to " +
-				 "default channel %s", b.Channel, e.Client.Self.Channel.Name))
+		} else {
+			b.AddOutputLine(fmt.Sprintf("Could not connect to %s, moving to "+
+				"default channel %s", b.Channel, e.Client.Self.Channel.Name))
 		}
 	}
 
