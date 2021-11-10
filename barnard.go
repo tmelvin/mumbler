@@ -4,8 +4,8 @@ import (
 	"crypto/tls"
 
 	"github.com/acien101/barnard/uiterm"
-	"layeh.com/gumble/gumble"
-	"layeh.com/gumble/gumbleopenal"
+	"github.com/cantudo/gumble/gumble"
+	"github.com/cantudo/gumble/gumbleopenal"
 )
 
 type Barnard struct {
@@ -13,7 +13,7 @@ type Barnard struct {
 	Client *gumble.Client
 
 	Address   string
-	Channel string
+	Channel   string
 	TLSConfig tls.Config
 
 	Stream *gumbleopenal.Stream

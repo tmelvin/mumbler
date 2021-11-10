@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kennygrant/sanitize"
 	"github.com/acien101/barnard/uiterm"
-	"layeh.com/gumble/gumble"
+	"github.com/cantudo/gumble/gumble"
+	"github.com/kennygrant/sanitize"
 )
 
 const (
