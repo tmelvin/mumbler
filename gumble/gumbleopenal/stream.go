@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/cantudo/barnard/gumble/gumble"
+	"github.com/cantudoq/barnard/gumble/gumble"
 	"github.com/dchote/go-openal/openal"
 )
 
@@ -25,7 +25,7 @@ type Stream struct {
 	contextSink *openal.Context
 }
 
-func New(client *gumble.Client, inputDevice string, outputdevice string) (*Stream, error) {
+func New(client *gumble.Client, inputDevice string, outputDevice string) (*Stream, error) {
 	s := &Stream{
 		client:          client,
 		sourceFrameSize: client.Config.AudioFrameSize(),
