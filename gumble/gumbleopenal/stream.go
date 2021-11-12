@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/cantudoq/barnard/gumble/gumble"
+	"github.com/cantudo/barnard/gumble/gumble"
 	"github.com/dchote/go-openal/openal"
 )
 
