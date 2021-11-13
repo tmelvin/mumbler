@@ -16,8 +16,9 @@ type Barnard struct {
 	Channel   string
 	TLSConfig tls.Config
 
-	InputDevice  string
-	OutputDevice string
+	InputDevice    string
+	OutputDevice   string
+	InmediateStart bool
 
 	Stream *gumbleopenal.Stream
 

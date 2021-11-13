@@ -45,6 +45,7 @@ func main() {
 	inputdevice := flag.Int("inputdevice", 0, "input device to use, see list_devices")
 	outputdevice := flag.Int("outputdevice", 0, "output device to use, see list_devices")
 	list_devices := flag.Bool("list_devices", false, "do not connect; instead, list available audio devices and exit")
+	inmediatestart := flag.Bool("inmediatestart", false, "start transmitting right away")
 
 	flag.Parse()
 
@@ -58,11 +59,12 @@ func main() {
 
 	// Initialize
 	b := Barnard{
-		Config:       gumble.NewConfig(),
-		Address:      *server,
-		Channel:      *channel,
-		InputDevice:  idevs[*inputdevice],
-		OutputDevice: odevs[*outputdevice],
+		Config:         gumble.NewConfig(),
+		Address:        *server,
+		Channel:        *channel,
+		InputDevice:    idevs[*inputdevice],
+		OutputDevice:   odevs[*outputdevice],
+		InmediateStart: *inmediatestart,
 	}
 
 	b.Config.Username = *username
