@@ -1,9 +1,22 @@
-# barnard - acien101 fork
+# barnard - Cantudo fork
 
-IS THE SAME BUT IT SUPPORT TO CONNECT TO A CHANNEL AT START LIKE THIS:
+It adds suport for immediate conenction to a channel:
 ```
-barnard -server mumble.FFF.org:64738 -username prueba -channel "YEAH"
+barnard -server mumble.FFF.org:64738 -username prueba -channel "channel"
 ```
+support for connection to different audio devices
+```
+barnard -server mumble.FFF.org:64738 -username prueba -channel "channel" -outputdevice 4 -inputdevice 5
+```
+you can get a list of the audio devices with
+```
+barnard -list_devices
+```
+it also adds a flag to start transmission rightaway without any keypresses
+```
+barnard -server mumble.FFF.org:64738 -username prueba -channel "channel" -outputdevice 4 -inputdevice 5 -inmediatestart
+```
+
 
 barnard is a terminal-based client for the [Mumble](https://mumble.info) voice
 chat software.
