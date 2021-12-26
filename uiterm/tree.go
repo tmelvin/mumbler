@@ -80,7 +80,7 @@ func (t *Tree) rebuild_rec(parent TreeItem, level int) []renderedTreeItem {
 		return nil
 	}
 	lines := []renderedTreeItem{
-		renderedTreeItem{
+		{
 			Level: level,
 			Item:  parent,
 		},

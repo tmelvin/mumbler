@@ -3,6 +3,7 @@ package uiterm
 import (
 	"errors"
 	"sync/atomic"
+	"fmt"
 
 	"github.com/nsf/termbox-go"
 )
@@ -40,6 +41,7 @@ func New(manager UiManager) *Ui {
 		manager:      manager,
 		keyListeners: make(map[Key][]KeyListener),
 	}
+	fmt.Printf("new ui\n")
 	return ui
 }
 
@@ -105,29 +107,30 @@ func (ui *Ui) Run() error {
 		}
 	}()
 
-	ui.manager.OnUiInitialize(ui)
+	// ui.manager.OnUiInitialize(ui)
 	width, height := termbox.Size()
 	ui.manager.OnUiResize(ui, width, height)
 	ui.Refresh()
-
-	for {
-		select {
-		case <-ui.close:
-			return nil
-		case event := <-events:
-			switch event.Type {
-			case termbox.EventResize:
-				ui.manager.OnUiResize(ui, event.Width, event.Height)
-				ui.Refresh()
-			case termbox.EventKey:
-				if event.Ch != 0 {
-					ui.onCharacterEvent(event.Ch)
-				} else {
-					ui.onKeyEvent(Modifier(event.Mod), Key(event.Key))
-				}
-			}
-		}
-	}
+	fmt.Printf("ui running\n")
+	// for {
+	// 	select {
+	// 	case <-ui.close:
+	// 		return nil
+	// 	case event := <-events:
+	// 		switch event.Type {
+	// 		case termbox.EventResize:
+	// 			ui.manager.OnUiResize(ui, event.Width, event.Height)
+	// 			ui.Refresh()
+	// 		case termbox.EventKey:
+	// 			if event.Ch != 0 {
+	// 				ui.onCharacterEvent(event.Ch)
+	// 			} else {
+	// 				ui.onKeyEvent(Modifier(event.Mod), Key(event.Key))
+	// 			}
+	// 		}
+	// 	}
+	// }
+	return nil
 }
 
 func (ui *Ui) onCharacterEvent(ch rune) {

@@ -10,7 +10,7 @@ import (
 	"github.com/cantudo/barnard/gumble/gumbleutil"
 )
 
-func (b *Barnard) start() {
+func (b *Barnard) start() error {
 	b.Config.Attach(gumbleutil.AutoBitrate)
 	b.Config.Attach(b)
 
@@ -18,7 +18,8 @@ func (b *Barnard) start() {
 	_, err = gumble.DialWithDialer(new(net.Dialer), b.Address, b.Config, &b.TLSConfig)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
-		os.Exit(1)
+		// os.Exit(1)
+		return err
 	}
 
 	// Audio
@@ -27,13 +28,14 @@ func (b *Barnard) start() {
 	}
 	if stream, err := gumbleopenal.New(b.Client, b.InputDevice, b.OutputDevice); err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
-		os.Exit(1)
+		return err
 	} else {
 		b.Stream = stream
 		if b.InmediateStart {
 			b.Stream.StartSource()
 		}
 	}
+	return nil
 }
 
 func (b *Barnard) OnConnect(e *gumble.ConnectEvent) {
@@ -44,20 +46,21 @@ func (b *Barnard) OnConnect(e *gumble.ConnectEvent) {
 		target := e.Client.Self.Channel.Find(b.Channel)
 		if target != nil {
 			e.Client.Self.Move(e.Client.Self.Channel.Find(b.Channel))
-		} else {
+		} else if b.Ui != nil {
 			b.AddOutputLine(fmt.Sprintf("Could not connect to %s, moving to "+
 				"default channel %s", b.Channel, e.Client.Self.Channel.Name))
 		}
 	}
 
-	b.Ui.SetActive(uiViewInput)
-	b.UiTree.Rebuild()
-	b.Ui.Refresh()
-
-	b.UpdateInputStatus(fmt.Sprintf("To: %s", e.Client.Self.Channel.Name))
-	b.AddOutputLine(fmt.Sprintf("Connected to %s", b.Client.Conn.RemoteAddr()))
-	if e.WelcomeMessage != nil {
-		b.AddOutputLine(fmt.Sprintf("Welcome message: %s", esc(*e.WelcomeMessage)))
+	if b.Ui != nil {
+		b.Ui.SetActive(uiViewInput)
+		b.UiTree.Rebuild()
+		b.Ui.Refresh()
+		b.UpdateInputStatus(fmt.Sprintf("To: %s", e.Client.Self.Channel.Name))
+		b.AddOutputLine(fmt.Sprintf("Connected to %s", b.Client.Conn.RemoteAddr()))
+		if e.WelcomeMessage != nil {
+			b.AddOutputLine(fmt.Sprintf("Welcome message: %s", esc(*e.WelcomeMessage)))
+		}
 	}
 }
 
@@ -67,13 +70,15 @@ func (b *Barnard) OnDisconnect(e *gumble.DisconnectEvent) {
 	case gumble.DisconnectError:
 		reason = "connection error"
 	}
-	if reason == "" {
-		b.AddOutputLine("Disconnected")
-	} else {
-		b.AddOutputLine("Disconnected: " + reason)
+	if b.Ui != nil {
+		if reason == "" {
+			b.AddOutputLine("Disconnected")
+		} else {
+			b.AddOutputLine("Disconnected: " + reason)
+		}
+		b.UiTree.Rebuild()
+		b.Ui.Refresh()
 	}
-	b.UiTree.Rebuild()
-	b.Ui.Refresh()
 }
 
 func (b *Barnard) OnTextMessage(e *gumble.TextMessageEvent) {
