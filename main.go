@@ -170,7 +170,7 @@ func api(port int) {
 	router.POST("/clients", postClients)
 	router.POST("/clients/disconnect/:id", disconnectClient)
 
-	router.Run(fmt.Sprintf("localhost:%d", port))
+	router.Run(fmt.Sprintf("0.0.0.0:%d", port))
 }
 
 func main() {
