@@ -157,8 +157,11 @@ func disconnectClient(c *gin.Context) {
 
 	b := clientBarnardMap[id]
 	if b != nil {
+		b.Stream.Destroy()
 		b.Client.Disconnect()
 		delete(clientBarnardMap, id)
+	} else {
+		c.String(http.StatusNotFound, "Client not found")
 	}
 	c.String(http.StatusOK, fmt.Sprintf("Disconnected %s", id))
 }
