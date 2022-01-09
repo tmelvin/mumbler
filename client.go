@@ -14,19 +14,12 @@ func (b *Barnard) start() error {
 	b.Config.Attach(gumbleutil.AutoBitrate)
 	b.Config.Attach(b)
 
-	var err error
-	_, err = gumble.DialWithDialer(new(net.Dialer), b.Address, b.Config, &b.TLSConfig)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s\n", err)
-		// os.Exit(1)
-		return err
-	}
-
 	// Audio
 	if os.Getenv("ALSOFT_LOGLEVEL") == "" {
 		os.Setenv("ALSOFT_LOGLEVEL", "0")
 	}
 	if stream, err := gumbleopenal.New(b.Client, b.InputDevice, b.OutputDevice); err != nil {
+		fmt.Printf("Error starting stream\n")
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		return err
 	} else {
@@ -35,6 +28,15 @@ func (b *Barnard) start() error {
 			b.Stream.StartSource()
 		}
 	}
+
+	var err error
+	_, err = gumble.DialWithDialer(new(net.Dialer), b.Address, b.Config, &b.TLSConfig)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err)
+		// os.Exit(1)
+		return err
+	}
+
 	return nil
 }
 

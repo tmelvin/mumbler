@@ -134,9 +134,12 @@ func postClients(c *gin.Context) {
 	if err := c.BindJSON(&newClient); err != nil {
 		return
 	}
-
+	id := fmt.Sprintf("%s@%s", newClient.Username, newClient.Server)
 	// Add the new album to the slice.
-
+	if b_test := clientBarnardMap[id]; b_test != nil {
+		c.IndentedJSON(http.StatusOK, gin.H{"status": "already connected"})
+		return
+	}
 	b, err := connect(
 		newClient.Username, newClient.Password, newClient.Server,
 		newClient.Channel, newClient.InputDevice, newClient.OutputDevice,
@@ -146,7 +149,7 @@ func postClients(c *gin.Context) {
 		c.String(http.StatusBadRequest, fmt.Sprintf("Error connecting to server: %s", err))
 	} else {
 		clients = append(clients, newClient)
-		id := fmt.Sprintf("%s@%s", newClient.Username, newClient.Server)
+
 		clientBarnardMap[id] = b
 		c.IndentedJSON(http.StatusCreated, newClient)
 	}
