@@ -166,7 +166,11 @@ func disconnectClient(c *gin.Context) {
 	} else {
 		c.String(http.StatusNotFound, "Client not found")
 	}
+	
 	c.String(http.StatusOK, fmt.Sprintf("Disconnected %s", id))
+	os.Exit(3);
+	// for my specific instance I would like to exit this application when 
+	// the client has been disconnected from the server.
 }
 
 func api(port int) {
