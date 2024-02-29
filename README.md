@@ -1,27 +1,25 @@
-# barnard - Cantudo fork
+# Mumbler - Barnard fork
+
+You'll very likely want to install Barnards fork of Cantudo:
+
+https://github.com/layeh/barnard
 
 It adds suport for immediate conenction to a channel:
 ```
-barnard -server mumble.FFF.org:64738 -username prueba -channel "channel"
+mumbler -server mumble.FFF.org:64738 -username prueba -channel "channel"
 ```
 support for connection to different audio devices
 ```
-barnard -server mumble.FFF.org:64738 -username prueba -channel "channel" -outputdevice 4 -inputdevice 5
+mumbler -server mumble.FFF.org:64738 -username prueba -channel "channel" -outputdevice 4 -inputdevice 5
 ```
 you can get a list of the audio devices with
 ```
-barnard -list_devices
+mumbler -list_devices
 ```
 it also adds a flag to start transmission rightaway without any keypresses
 ```
-barnard -server mumble.FFF.org:64738 -username prueba -channel "channel" -outputdevice 4 -inputdevice 5 -inmediatestart
+mumbler -server mumble.FFF.org:64738 -username prueba -channel "channel" -outputdevice 4 -inputdevice 5 -inmediatestart
 ```
-
-
-barnard is a terminal-based client for the [Mumble](https://mumble.info) voice
-chat software.
-
-![Screenshot](https://i.imgur.com/B8ldT5k.png)
 
 ## Installation
 
@@ -34,9 +32,9 @@ Requirements:
 
 To fetch and build:
 
-    go get -u layeh.com/barnard
+    go get -u https://github.com/tmelvin/mumbler@latest
 
-After running the command above, `barnard` will be compiled as `$(go env GOPATH)/bin/barnard`.
+After running the command above, `mumbler` will be compiled as `$(go env GOPATH)/bin/mumbler`.
 
 ## Manual
 
