@@ -1,4 +1,4 @@
-module github.com/cantudo/barnard
+module github.com/tmelvin/mumbler
 
 go 1.17
 
