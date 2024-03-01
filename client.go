@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"time"
 
 	"github.com/cantudo/barnard/gumble/gumble"
 	"github.com/cantudo/barnard/gumble/gumbleopenal"
@@ -41,7 +42,7 @@ func (b *Barnard) start() error {
 
 func (b *Barnard) OnConnect(e *gumble.ConnectEvent) {
 	b.Client = e.Client
-
+	b.Config.Reconnecting = false;
 	// If there is a channel on arguments move it
 	if b.Channel != "" {
 		target := e.Client.Self.Channel.Find(b.Channel)
@@ -71,6 +72,16 @@ func (b *Barnard) OnDisconnect(e *gumble.DisconnectEvent) {
 	case gumble.DisconnectError:
 		reason = "connection error"
 	}
+
+	if b.Config.Reconnect {
+		b.Config.Reconnecting = true;
+		while( b.Config.Reconnecting ) {
+			b.AddOutputLine("Retrying...")
+			time.Sleep(120 * time.Second)
+			b.start()
+		}	
+	}
+
 	if b.Ui != nil {
 		if reason == "" {
 			b.AddOutputLine("Disconnected")
